@@ -1,0 +1,141 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Wishes API
+x-yc-apigateway:
+  service_account_id: ajehap3vl17kpof669tl
+
+paths:
+  /{file+}:
+    options:
+      parameters:
+        - name: file
+          in: path
+          description: greedy param
+          required: false
+          schema:
+            type: string
+      description: Greedy options
+      operationId: greedyOptions
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        content:
+          "*": ""
+        http_headers:
+          Allow: OPTIONS, GET, HEAD, POST
+          Access-Control-Allow-Origin: '*'
+          Access-Control-Allow-Headers: Content-Type, Authorization
+  /api/wishes:
+    get:
+      description: Returns wishes
+      operationId: getWishes
+      responses:
+        '200':
+          description: wishes response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Wishes'
+      x-yc-apigateway-integration:
+        type: serverless_containers
+        container_id: bbaemgdp8s7r560i4nm4
+  /api/wish:
+    post:
+      description: Upsert wish
+      operationId: postWish
+      requestBody:
+        description: Wish to upsert
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wish'
+      responses:
+        '201':
+          description: movie response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WishOut'
+      x-yc-apigateway-integration:
+        type: serverless_containers
+        container_id: bbaemgdp8s7r560i4nm4
+  "/api/ping":
+    get:
+      summary: Server Info
+      operationId: server_info_api_info_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ping"
+      x-yc-apigateway-integration:
+        type: serverless_containers
+        container_id: bbaemgdp8s7r560i4nm4
+components:
+  schemas:
+    ApiInfo:
+      type: object
+      required:
+        - name
+        - version
+        - replica_id
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+        replica_id:
+          type: string
+    Wish:
+      type: object
+      required:
+        - wish_id
+        - title
+        - author
+        - description
+        - whom
+      properties:
+        wish_id:
+          type: string
+        title:
+          type: string
+        author:
+          type: string
+        description:
+          type: string
+        whom:
+          type: string
+    WishOut:
+      type: object
+      required:
+        - wish
+        - api_info
+      properties:
+        wish:
+          "$ref": "#/components/schemas/Wish"
+        api_info:
+          "$ref": "#/components/schemas/ApiInfo"
+    Wishes:
+      type: object
+      required:
+        - wishes
+        - api_info
+      properties:
+        wishes:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Wish"
+        api_info:
+          "$ref": "#/components/schemas/ApiInfo"
+    ping:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string

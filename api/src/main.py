@@ -1,36 +1,42 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from config import Settings
 from models import Wish
-from schemes import WishesOut
+from schemes import WishesOut, ApiInfo, WishOut
 from wishService import WishService
 
 settings = Settings()
 app = FastAPI()
 service = WishService()
+api_info = ApiInfo(name='Wish api', version=settings.version, replica_id='13')
 
 
-@app.get("/")
+@app.get('/')
 async def root():
-    return {"message": "Hello World"}
+    return {'message': 'Wishes api'}
 
 
-@app.get("/api/ping")
-async def ping():
-    return {"message": "ok"}
+@app.get('/api', response_model=ApiInfo)
+async def get_api_info():
+    return api_info
 
 
-@app.get("/api/wishes", response_model=WishesOut, status_code=200)
+@app.get('/api/ping', status_code=200)
+async def ping(request: Request):
+    return {'message': 'ok'}
+
+
+@app.get('/api/wishes', response_model=WishesOut, status_code=200)
 async def get_wishes():
     wishes = await service.get_wishes()
-    return {"wishes": wishes}
+    return {'wishes': wishes, 'api_info': api_info}
 
 
-@app.post("/api/wish", status_code=201, response_model=Wish)
+@app.post('/api/wish', status_code=201, response_model=WishOut)
 async def create_wish(wish: Wish):
-    await service.create_wish(wish)
-    return {"title": wish.title, "author": wish.author, "description": wish.description, "whom": wish.whom}
+    created_wish = await service.create_wish(wish)
+    return {'wish': created_wish, 'api_info': api_info}
 
 
 if __name__ == '__main__':

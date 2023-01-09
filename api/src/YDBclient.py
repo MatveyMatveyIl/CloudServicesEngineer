@@ -11,7 +11,10 @@ class YDBclient:
     def __init__(self):
         self.settings = Settings()
         self.ydb_docapi_client = boto3.resource('dynamodb',
-                                                endpoint_url=self.settings.wish_database_document_api_endpoint)
+                                                endpoint_url=self.settings.wish_database_document_api_endpoint,
+                                                region_name=self.settings.region,
+                                                aws_access_key_id=self.settings.aws_key_id,
+                                                aws_secret_access_key=self.settings.aws_secret)
 
     def create_table(self):
         table = self.ydb_docapi_client.create_table(
@@ -53,15 +56,15 @@ class YDBclient:
 
     def load_data(self, wish: Wish):
         table = self.ydb_docapi_client.Table('wishes')
-        for item in table.objects.all():
-            print(item)
+        wish_id = uuid1().hex
         table.put_item(Item={
-            'wish_id': uuid1().hex,
+            'wish_id': wish_id,
             'title': wish.title,
             'author': wish.author,
             'description': wish.description,
             'whom': wish.whom
         })
+        return wish_id
 
     def get_items(self):
         table = self.ydb_docapi_client.Table('wishes')
