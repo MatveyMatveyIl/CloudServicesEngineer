@@ -15,3 +15,6 @@ class WishService:
         items = self.ydb_client.get_items()
         wishes = [Wish.parse_obj(el) for el in items]
         return wishes
+
+    def get_replica_id(self):
+        return self.ydb_client.get_replica()

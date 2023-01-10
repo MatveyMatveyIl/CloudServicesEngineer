@@ -9,7 +9,8 @@ from wishService import WishService
 settings = Settings()
 app = FastAPI()
 service = WishService()
-api_info = ApiInfo(name='Wish api', version=settings.version, replica_id='13')
+replica_id = service.get_replica_id()
+api_info = ApiInfo(name='Wish api', version=settings.version, replica_id=replica_id)
 
 
 @app.get('/')
@@ -34,7 +35,8 @@ async def get_wishes():
 
 
 @app.post('/api/wish', status_code=201, response_model=WishOut)
-async def create_wish(wish: Wish):
+async def create_wish(author: str, title: str, description: str, whom: str):
+    wish = Wish(author=author, title=title, description=description, whom=whom, wish_id='1')
     created_wish = await service.create_wish(wish)
     return {'wish': created_wish, 'api_info': api_info}
 

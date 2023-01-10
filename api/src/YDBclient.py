@@ -17,7 +17,7 @@ class YDBclient:
                                                 aws_secret_access_key=self.settings.aws_secret)
 
     def create_table(self):
-        table = self.ydb_docapi_client.create_table(
+        wish_table = self.ydb_docapi_client.create_table(
             TableName='wishes',
             KeySchema=[
                 {
@@ -52,7 +52,27 @@ class YDBclient:
                 },
             ]
         )
-        return table
+        replica_table = self.ydb_docapi_client.create_table(
+            TableName='replica',
+            KeySchema=[
+                {
+                    'AttributeName': 'replica_id',
+                    'KeyType': 'HASH'
+                },
+            ],
+            AttributeDefinitions=[
+                {
+                    'AttributeName': 'replica_id',
+                    'AttributeType': 'N'
+                },
+                {
+                    'AttributeName': 'count',
+                    'AttributeType': 'N'
+                }
+            ]
+        )
+        self.ydb_docapi_client.Table('replica').put_item(Item={'replica_id': 0, 'count': 0})
+        return [wish_table, replica_table]
 
     def load_data(self, wish: Wish):
         table = self.ydb_docapi_client.Table('wishes')
@@ -76,3 +96,15 @@ class YDBclient:
             data.extend(response['Items'])
 
         return data
+
+    def get_replica(self):
+        table = self.ydb_docapi_client.Table('replica')
+        inc = table.update_item(
+            Key={
+                'replica_id': 0
+            },
+            UpdateExpression='ADD count :val',
+            ExpressionAttributeValues={":val": 1},
+            ReturnValues="UPDATED_NEW"
+        )
+        return inc['Attributes']['count']
