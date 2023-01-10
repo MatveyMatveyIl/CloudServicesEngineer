@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <base href="/">
+  <title>Wish App</title>
+</head>
+
+<div class="main">
+  <div class="apiInfo"></div>
+  <h1 class="appName">Сервис желаний</h1>
+  <form class="usersForm">
+    <label>
+      Название
+      <input class="title" placeholder="Введите название">
+    </label>
+    <label>
+      Описание
+      <input class="description" placeholder="Введите описание">
+    </label>
+    <label>
+      Автор
+      <input class="author" placeholder="Введите автора">
+    </label>
+    <label>
+      Кому
+      <input class="whom" placeholder="Введите получателя">
+    </label>
+    <input type="submit" class="addWish">
+  </form>
+  <div class="wish">
+  </div>
+
+  <style>
+    .appName {
+      font-size: 30px;
+      color: darkblue;
+    }
+
+    .wish {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      color: darkblue;
+      background-color: antiquewhite;
+      font-family: "Al Nile", serif;
+      font-size: 16px;
+      align-items: center;
+      border-style: double;
+    }
+
+    .apiInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .usersForm {
+      flex-direction: row;
+      justify-content: space-between;
+      border: darkblue 5px solid;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: flex-start;
+    }
+  </style>
+  <script type="module" src="./index.js"></script>
+
+</div>
+</html>

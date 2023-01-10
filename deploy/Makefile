@@ -1,12 +1,16 @@
-init:
+init: create_env_file
 	chmod +x ./sa_roles.sh
 	chmod +x ../api/deploy.sh
 	terraform init
 destroy:
 	terraform destroy
 preparation: create_sa create_db create_registry configure_docker create_sls_container
+configure_apigetway: configure_be_gateway configure_fe_gateway
 
-
+create_obj_storage:
+	terraform apply -target=yandex_storage_bucket.wishes_website_bucket
+create_env_file:
+	cat credentials.example > credentials
 create_sa:
 	terraform apply -target=yandex_iam_service_account.app_service_account
 create_db:
@@ -21,6 +25,8 @@ create_sls_container:
 
 configure_be_gateway:
 	terraform apply -target=yandex_api_gateway.wishesbe_api_gateway
+configure_fe_gateway:
+	terraform apply -target=yandex_api_gateway.wishes_website_gateway
 
 
 sa_permissions: get_roles get_access-key
@@ -33,6 +39,9 @@ get_access-key:
 
 deploy_backend:
 	cd ../api && ./deploy.sh cd ../deploy;
+
+deploy_web:
+	cd ../front && ./deploy.sh cd ../deploy;
 
 data:
 	export $(grep -v '^#' credentials | xargs)

@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Wishes API
 x-yc-apigateway:
-  service_account_id: ajehap3vl17kpof669tl
+    service_account_id: {APP_SERVICE_ACCOUNT_ID}
 
 paths:
   /{file+}:
@@ -40,7 +40,7 @@ paths:
                   $ref: '#/components/schemas/Wishes'
       x-yc-apigateway-integration:
         type: serverless_containers
-        container_id: bbaemgdp8s7r560i4nm4
+        container_id: {WISH_API_CONTAINER_ID}
   /api/wish:
     post:
       description: Upsert wish
@@ -61,7 +61,7 @@ paths:
                 $ref: '#/components/schemas/WishOut'
       x-yc-apigateway-integration:
         type: serverless_containers
-        container_id: bbaemgdp8s7r560i4nm4
+        container_id: {WISH_API_CONTAINER_ID}
   "/api/ping":
     get:
       summary: Server Info
@@ -75,7 +75,7 @@ paths:
                 "$ref": "#/components/schemas/ping"
       x-yc-apigateway-integration:
         type: serverless_containers
-        container_id: bbaemgdp8s7r560i4nm4
+        container_id: {WISH_API_CONTAINER_ID}
 components:
   schemas:
     ApiInfo:

@@ -1,0 +1,15 @@
+openapi: "3.0.0"
+info:
+    version: 1.0.0
+    title: Wishes website
+x-yc-apigateway:
+    service_account_id: {APP_SERVICE_ACCOUNT_ID}
+
+paths:
+    /:
+        get:
+            operationId: index
+            x-yc-apigateway-integration:
+                type: object_storage
+                bucket: {WISHES_WEBSITE_BUCKET}
+                object: 'index.html'

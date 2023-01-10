@@ -16,8 +16,8 @@ provider "yandex" {
 
 
 locals {
-  token      = ""
-  cloud_id   = ""
-  folder_id  = ""
+  token      = "y0_AgAAAABkukKLAATuwQAAAADQHfuJ3uMAeFnuRNiSTu-6So0H7UxhnHY"
+  cloud_id   = "b1gnl9lju0pb9teqm9bc"
+  folder_id  = "b1glgksk5r3280agln0r"
   zone       = "ru-central1-a"
 }
