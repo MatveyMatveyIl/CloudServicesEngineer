@@ -1,6 +1,7 @@
 init: create_env_file
 	chmod +x ./sa_roles.sh
 	chmod +x ../api/deploy.sh
+	chmod +x ../front/deploy.sh
 	terraform init
 destroy:
 	terraform destroy

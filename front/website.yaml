@@ -13,3 +13,16 @@ paths:
                 type: object_storage
                 bucket: {WISHES_WEBSITE_BUCKET}
                 object: 'index.html'
+    /{file+}:
+        get:
+            operationId: website
+            parameters:
+                - name: file
+                  in: path
+                  required: false
+                  schema:
+                      type: string
+            x-yc-apigateway-integration:
+                type: object_storage
+                bucket: {WISHES_WEBSITE_BUCKET}
+                object: '{file}'

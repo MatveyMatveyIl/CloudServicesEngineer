@@ -62,7 +62,11 @@
    aws configure
    ```
    - ввести данные из access_key
-10. внести данные в obj_storage.tf + make create_obj_storage
+10. внести данные aws в obj_storage.tf
+    ```bash
+    make create_obj_storage
+    ```
+    - добавить wishes_website_bucket в credentials
 11. ```bash 
     cd ../api
     ```
@@ -73,7 +77,7 @@
 12. ```bash
     cd ../frontend
     ```
-    - Поменять данные в web.yaml
+    - Поменять данные в web.yaml {APP_SERVICE_ACCOUNT_ID}, {WISHES_WEBSITE_BUCKET}
 
 13. ```bash
     cd ../deploy
@@ -81,7 +85,11 @@
 14. ```bash
     make configure_apigetway
     ```
-15. внести данные в cred + export $(grep -v '^#' credentials | xargs)
+15. внести данные в credentials
+16. export $(grep -v '^#' credentials | xargs)
+17. обновить переменную api в index.js на ${WISHBE_API_GATEWAY_DOMAIN}
+
+Эти настройки нужно провести один раз, чтобы поднять всю инфраструктуру облака.
     
 
 ## Обновление приложения
