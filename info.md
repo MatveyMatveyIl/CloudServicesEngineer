@@ -87,7 +87,7 @@
     ```
 15. внести данные в credentials
 16. export $(grep -v '^#' credentials | xargs)
-17. обновить переменную api в index.js на ${WISHBE_API_GATEWAY_DOMAIN}
+17. обновить переменную api в consts.js на ${WISHBE_API_GATEWAY_DOMAIN}
 
 Эти настройки нужно провести один раз, чтобы поднять всю инфраструктуру облака.
     
