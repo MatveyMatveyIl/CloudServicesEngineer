@@ -1,7 +1,7 @@
 init: create_env_file
 	chmod +x ./sa_roles.sh
 	chmod +x ../api/deploy.sh
-	chmod +x ../front/deploy.sh
+	chmod +x ../web/deploy.sh
 	terraform init
 destroy:
 	terraform destroy
@@ -42,7 +42,7 @@ deploy_backend:
 	cd ../api && ./deploy.sh cd ../deploy;
 
 deploy_web:
-	cd ../front && ./deploy.sh cd ../deploy;
+	cd ../web && ./deploy.sh cd ../deploy;
 
 data:
 	export $(grep -v '^#' credentials | xargs)

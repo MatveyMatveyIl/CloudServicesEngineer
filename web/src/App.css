@@ -1,0 +1,48 @@
+.appName {
+  font-size: 30px;
+  color: darkblue;
+}
+
+.wish {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: darkblue;
+  background-color: antiquewhite;
+  font-family: Al Nile, serif;
+  font-size: 16px;
+  align-items: center;
+  border-style: double;
+}
+
+.apiInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.usersForm {
+  flex-direction: row;
+  justify-content: space-between;
+  border: darkblue 5px solid;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: flex-start;
+}
+
+.wishBlock {
+  display : flex;
+  align-items : center;
+  border : black solid 1px;
+  width : 290px;
+  border-radius : 5px;
+  height : 114px;
+  margin : 5px;
+  flex-direction : column;
+  justify-content : space-between;
+}
+
+.wishDescription {
+  display: inline-flex;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+}

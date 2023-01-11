@@ -25,7 +25,7 @@ async def get_api_info():
 
 @app.get('/api/ping', status_code=200)
 async def ping(request: Request):
-    return {'message': 'ok'}
+    return {'message': 'ok!'}
 
 
 @app.get('/api/wishes', response_model=WishesOut, status_code=200)
